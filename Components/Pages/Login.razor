@@ -1,0 +1,101 @@
+﻿@using MYBlazorAPP.Components.Layout
+@inject IJSRuntime JS
+@inject NavigationManager Navigation
+@page "/"
+@layout LoginLayout
+@rendermode InteractiveServer
+
+<div class="body">
+    <div class="login-card">
+        <h2>Welcome Back</h2>
+        <p>Please enter your details to login.</p>
+
+        <EditForm Model="@loginModel" OnValidSubmit="Submit" FormName="LoginForm">
+            <div class="input-group">
+                <label>Email Address</label>
+                <input type="email" @bind="loginModel.Email" placeholder="name@company.com" required>
+            </div>
+
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" @bind="loginModel.Password" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="login-btn">Sign In</button>
+        </EditForm>
+        @if (isShowValidation)
+        {
+            <p class="validation-text">@validationMessage</p>
+        }
+        
+
+        <div class="footer-text">
+            Don't have an account? <a href="#">Create one</a>
+        </div>
+    </div>
+</div>
+
+@code {
+    private LoginModel loginModel = new();
+
+    private bool isShowValidation { get; set; } = false;
+    private string validationMessage { get; set; } = string.Empty;
+
+    private async Task Submit()
+    {
+        isShowValidation = false;
+        if (ValidatePassword(loginModel.Password) == false){
+            isShowValidation = true;
+            validationMessage= GetPasswordValidationMessage(loginModel.Password);
+            return;
+        }
+        Navigation.NavigateTo("/home");
+    }
+
+    public class LoginModel
+    {
+        public string Email { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
+    }
+
+    private bool ValidatePassword(string password)
+    {
+        if (string.IsNullOrEmpty(password) || password.Length < 8)
+            return false;
+
+        bool hasUpper = false;
+        bool hasNumber = false;
+        bool hasSymbol = false;
+
+        foreach (char c in password)
+        {
+            if (char.IsUpper(c)) hasUpper = true;
+            else if (char.IsDigit(c)) hasNumber = true;
+            else if (!char.IsLetterOrDigit(c)) hasSymbol = true;
+
+            if (hasUpper && hasNumber && hasSymbol)
+                return true;
+        }
+
+        return false;
+    }
+
+
+    private string GetPasswordValidationMessage(string password)
+    {
+        var messages = new List<string>();
+
+        if (string.IsNullOrEmpty(password) || password.Length < 8)
+            messages.Add("at least 8 characters");
+        if (!password.Any(char.IsUpper))
+            messages.Add("one uppercase letter");
+        if (!password.Any(char.IsDigit))
+            messages.Add("one number");
+        if (!password.Any(c => !char.IsLetterOrDigit(c)))
+            messages.Add("one symbol");
+
+        if (messages.Count == 0)
+            return string.Empty;
+
+        return "Password must contain " + string.Join(", ", messages) + ".";
+    }
+}

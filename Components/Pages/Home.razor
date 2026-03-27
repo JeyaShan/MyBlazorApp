@@ -1,7 +1,82 @@
-﻿@page "/"
-
+﻿@page "/home"
+@using System.Text
+@rendermode InteractiveServer
 <PageTitle>Home</PageTitle>
+
 
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
+<input type="text" @oninput="onNameChangedEvent" />
+<h1>Name : @name</h1>
+<h1>Reverse String : @reverseString</h1>
+<h1>Name is Palindrome :@isPalindrome</h1>
+<h1>Word : This will only render the p tag when needed.</h1>
+<h1>Reverse Word : @reverseWord</h1>
+<h1>Vowel Count : @vowelCount</h1>
+@code{
+    public string name { get; set; } = string.Empty;
+    public string reverseString { get; set; } = string.Empty;
+    public bool isPalindrome { get; set; } = false;
+    public string reverseWord { get; set; } = string.Empty;
+    public int vowelCount { get; set; } = 0;
+
+    protected override void OnInitialized()
+    {
+        stringBased();
+    }
+
+
+    private void onNameChangedEvent(ChangeEventArgs e){
+        string value = e.Value?.ToString() ?? "";
+        name = new string(value.Where(char.IsLetter).ToArray());
+        // reverseString = new string(name.Reverse().ToArray());
+        reverseString = "";
+        foreach (char c in name)
+        {
+            reverseString = c + reverseString;
+        }
+
+        // is palindrome check
+        if(name.Equals(reverseString)){
+            isPalindrome = true;
+        }
+        else
+        {
+            isPalindrome = false;
+        }
+
+        isPalindrome = name == "" ? false : name.SequenceEqual(reverseString);
+        countVowels();
+
+    }
+
+    private void stringBased() {
+        string val = "This will only render the p tag when needed.";
+        string[] splitVal = val.Split(" ");
+        var sb = new StringBuilder();
+        foreach(string str in splitVal.Reverse()){
+            sb.Append(str);
+            sb.Append(" ");
+        }
+        string sw =  string.Join(" ", (splitVal.Reverse().ToArray()));
+        reverseWord = new string(sb.ToString());
+        reverseWord = sw;
+    }
+
+    private void countVowels(){
+        string val = name;
+        string[] vowelsdata = ["a", "e", "i", "o", "u"];
+        int count = 0;
+        foreach (char c in val) { 
+            if (vowelsdata.Contains(c.ToString().ToLower()))
+            {
+                count++;
+            }
+        }
+        vowelCount = count;
+    }
+
+   
+}
+

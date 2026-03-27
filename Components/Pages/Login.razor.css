@@ -1,0 +1,93 @@
+﻿.body {
+     /*Replace the URL below with your background image */
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1920&q=80');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* The White Card */
+.login-card {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+    .login-card h2 {
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+    .login-card p {
+        color: #777;
+        font-size: 14px;
+        margin-bottom: 30px;
+    }
+
+/* Input styling */
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+    .input-group label {
+        display: block;
+        font-size: 13px;
+        margin-bottom: 5px;
+        color: #555;
+        font-weight: 600;
+    }
+
+    .input-group input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        outline: none;
+        transition: border-color 0.3s;
+    }
+
+        .input-group input:focus {
+            border-color: #4a90e2;
+        }
+
+/* Button styling */
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #4a90e2;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+    .login-btn:hover {
+        background-color: #357abd;
+    }
+
+.footer-text {
+    margin-top: 20px;
+    font-size: 13px;
+    color: #888;
+}
+
+.validation-text{
+    color: red !important;
+}
+
+.footer-text a {
+    color: #4a90e2;
+    text-decoration: none;
+}

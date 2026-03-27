@@ -1,0 +1,31 @@
+﻿<h1 class="header-text">Add Products</h1>
+
+<EditForm Model="@product" OnSubmit="@SaveProduct">
+    <div class="row row-form">
+        <div class="col-sm-5">
+            <label class="col-form-label" for="productName">Product Name</label>
+        </div>
+        <div class="col-sm-7">
+            <input class="form-control" id="productName" @bind="product.Name" placeholder="Enter product name" required />
+        </div>
+    </div> 
+    <div class="row row-form">
+        <div class="col-sm-5">
+            <label class="col-form-label" for="productName">Product Price</label>
+        </div>
+        <div class="col-sm-7">
+            <input class="form-control" id="productPrice" type="number" step="1" @bind="product.Price" placeholder="Enter product price" required />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-8">
+            <button type="submit" class="btn btn-primary mt-3" style="float:right">@saveButtonName</button>
+        </div>
+        <div class="col-sm-4">
+            <button type="button" @onclick="Cancel" class="btn btn-secondary mt-3">Cancel</button>
+        </div>
+        
+        
+    </div>
+    
+</EditForm>

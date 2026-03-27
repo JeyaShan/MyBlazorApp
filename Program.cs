@@ -1,11 +1,17 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using MYBlazorAPP.Components;
+using MYBlazorAPP.Model;
+using MYBlazorAPP.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
-
+builder.Services.AddScoped<HeaderMessageServices>();
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite("Data Source=app.db"));
+builder.Services.AddScoped<ProductServices>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
